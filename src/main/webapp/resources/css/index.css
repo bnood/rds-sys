@@ -6,7 +6,7 @@
 /* 导航 */
 .headerTop {
      /*background: #f0f0f0; */
-    background: url(/resources/images/bg.gif) fixed  repeat-y rgb(240, 240, 240);
+    /*background: url(/resources/images/bg.gif) fixed  repeat-y rgb(240, 240, 240);*/
     height: 36px;
     line-height: 36px;
     width: 100%;
