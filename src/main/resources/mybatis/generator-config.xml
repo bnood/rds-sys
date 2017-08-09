@@ -30,16 +30,16 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!--生成实体类 指定包名 以及生成的地址 （可以自定义地址，但是路径不存在不会自动创建  使用Maven生成在target目录下，会自动创建） -->
-        <javaModelGenerator targetPackage="${model.package}" targetProject="${entity.target.project}">
+        <javaModelGenerator targetPackage="${model.package}" targetProject="${target.project}">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--生成SQLMAP文件 -->
-        <sqlMapGenerator targetPackage="${xml.mapper.package}" targetProject="${sqlxml.target.project}">
+        <sqlMapGenerator targetPackage="${xml.mapper.package}" targetProject="${target.project}">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao文件 可以配置 type="XMLMAPPER"生成xml的dao实现  context id="DB2Tables" 修改targetRuntime="MyBatis3"  -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${mapper.target.project}">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${target.project}">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
