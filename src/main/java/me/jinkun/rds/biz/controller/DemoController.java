@@ -2,6 +2,8 @@ package me.jinkun.rds.biz.controller;
 
 import me.jinkun.rds.biz.entity.DemoUser;
 import me.jinkun.rds.biz.service.DemoService;
+import me.jinkun.rds.common.base.EUDataGridResult;
+import me.jinkun.rds.common.dto.Page;
 import me.jinkun.rds.common.dto.Result;
 import me.jinkun.rds.sys.web.form.SysUserForm;
 import org.slf4j.Logger;
@@ -41,14 +43,14 @@ public class DemoController {
 
     @RequestMapping(value = "/demo", method = RequestMethod.GET)
     @ResponseBody
-    public Object list() {
-        Result<DemoUser> result = this.demoService.list();
+    public Object list(Page page) {
+        EUDataGridResult result = this.demoService.page(page);
         return result;
     }
 
     @RequestMapping(value = "/demo/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Object item(@PathVariable("id") Long id) {
+    public Object get(@PathVariable("id") Long id) {
         Result<DemoUser> result = this.demoService.list();
         return result;
     }

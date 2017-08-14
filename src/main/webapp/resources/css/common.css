@@ -1,6 +1,22 @@
-.com_table{
-    border-collapse:separate;
-    border-spacing:0px 5px;
+.com_table {
+    border-collapse: separate;
+    border-spacing: 0px 5px;
+}
+
+.com_table > div {
+    height: 30px;
+    margin-top: 10px;
+}
+
+.com_table div label {
+    width: 120px;
+    float: left;
+    text-align: right;
+}
+
+.com_table div div {
+    width: 280px;
+    float: left;
 }
 
 .com_input {

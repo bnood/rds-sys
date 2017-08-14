@@ -184,8 +184,8 @@
     <include refid="Base_Column_List" />
     from demo_user
     <where>
-      <if test="filter.id != null and filter.id != ''">
-        AND id = #{filter.id}
+      <if test="filter.name != null and filter.name != ''">
+        and name like concat(#{filter.name},'%')
       </if>
     </where>
     limit #{offset},#{rows}
@@ -196,8 +196,8 @@
     count(*)
     from demo_user
     <where>
-      <if test="filter.id != null and filter.id != ''">
-        AND id = #{filter.id}
+      <if test="filter.name != null and filter.name != ''">
+        and name like concat(#{filter.name},'%')
       </if>
     </where>
   </select>

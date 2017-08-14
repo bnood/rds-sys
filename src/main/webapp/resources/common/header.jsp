@@ -22,7 +22,7 @@
 <script type="text/javascript" src="${ctx}/resources/js/extJs.js"></script>
 
 <!-- 自定义css -->
-<link rel="stylesheet" href="${ctx}/resources/css/common.css">
+<link rel="stylesheet" href="${ctx}/resources/css/common.css?i=3">
 
 
 

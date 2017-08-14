@@ -3,11 +3,6 @@ var ItemList;
 var ItemEdit;
 var ItemForm;
 
-//其它组件
-var ItemOrgTree;
-var ItemOrg;
-var ItemRole;
-
 var Item = {
     URL: {
         inputUI: function () {
@@ -25,12 +20,6 @@ var Item = {
         get: function (id) {
             return ctx + "/demo/" + id;
         },
-        orgTree: function () {
-            return ctx + "/sys/orgs/tree";
-        },
-        roleListAll: function () {
-            return ctx + "/sys/roles/all";
-        },
     },
     input: {
         init: function (ct) {
@@ -40,8 +29,6 @@ var Item = {
         },
         initComponent: function () {
             ItemForm = $("#ItemForm");
-            ItemOrg = $("#ItemOrg");
-            ItemRole = $("#ItemRole");
         },
         initForm: function () {
             ItemForm.form({
@@ -71,26 +58,11 @@ var Item = {
         init: function (ct) {
             ctx = ct;
             Item.list.initComponent();
-            Item.list.initOrgTree();
             Item.list.initList();
         },
         initComponent: function () {
             ItemList = $("#ItemList");
             ItemEdit = $('#ItemEdit');
-            ItemOrgTree = $('#ItemOrgTree');
-        },
-        initOrgTree: function () {
-            ItemOrgTree.tree({
-                method: 'get',
-                url: Item.URL.orgTree(),
-                onSelect: function (node) {
-                    if (ItemOrgTree.tree('isLeaf', node.target)) {
-                        ItemList.datagrid({
-                            queryParams: {orgId: node.id},
-                        });
-                    }
-                }
-            });
         },
         initList: function () {
             ItemList.datagrid({
@@ -135,18 +107,6 @@ var Item = {
         add: function () {
             ItemEdit.dialog({
                     href: Item.URL.inputUI(),
-                    onLoad: function () {
-                        ItemOrg.combotree({
-                            url: Item.URL.orgTree(),
-                            method: 'get',
-                            panelHeight: 'auto'
-                        });
-                        ItemRole.combobox({
-                            url: Item.URL.roleListAll(),
-                            method: 'get',
-                            panelHeight: 'auto'
-                        });
-                    }
                 })
                 .dialog("open");
         },
@@ -177,22 +137,6 @@ var Item = {
                             success: function (data) {
                                 if (data.code == 200) {
                                     ItemForm.form("load", data.data);
-                                    ItemOrg.combotree({
-                                        url: Item.URL.orgTree(),
-                                        method: 'get',
-                                        panelHeight: 'auto',
-                                        onLoadSuccess: function () {
-                                            ItemOrg.combotree('setValue', data.data.orgId);
-                                        }
-                                    });
-                                    ItemRole.combobox({
-                                        url: Item.URL.roleListAll(),
-                                        method: 'get',
-                                        panelHeight: 'auto',
-                                        onLoadSuccess: function () {
-                                            ItemRole.combobox('setValues', data.data.roleId);
-                                        }
-                                    });
                                 }
                             }
                         });
@@ -244,7 +188,7 @@ var Item = {
 
             var queryParamsArr = [];
             for (var i = 0; i < searchName.length; i++) {
-                queryParamsArr.push(searchName[i] + ":'" + searchValue[i] + "'")
+                queryParamsArr.push('"'+searchName[i] + '":"' + searchValue[i] + '"')
             }
             var queryParams = "{" + queryParamsArr.join(",") + "}";
 
