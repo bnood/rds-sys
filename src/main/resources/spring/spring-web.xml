@@ -29,7 +29,7 @@
     </bean>
 
     <!-- 4.扫描web相关的bean -->
-    <context:component-scan base-package="me.jinkun.rds.*.web"/>
+    <context:component-scan base-package="me.jinkun.rds.*.web,me.jinkun.rds.*.controller"/>
 
     <!-- 定义文件上传解析器 -->
     <bean id="multipartResolver"
