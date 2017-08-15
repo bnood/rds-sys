@@ -32,13 +32,15 @@ public class DemoController {
     @RequestMapping(value = "/demo", method = RequestMethod.POST)
     @ResponseBody
     public Object save(DemoUser item) {
-        return this.demoService.save(item);
+        Result result = this.demoService.save(item);
+        return result;
     }
 
     @RequestMapping(value = "/demo/{ids}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object delete(@PathVariable("ids") String ids) {
-        return this.demoService.delete(ids);
+        Result result = this.demoService.delete(ids);
+        return result;
     }
 
     @RequestMapping(value = "/demo", method = RequestMethod.GET)
