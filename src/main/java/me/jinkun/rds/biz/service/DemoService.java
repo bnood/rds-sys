@@ -13,7 +13,9 @@ public interface DemoService {
 
     Result save(DemoUser item);
 
-    Result<DemoUser> list();
-
     EUDataGridResult page(Page page);
+
+    Result<DemoUser> get(Long id);
+
+    Result delete(String ids);
 }

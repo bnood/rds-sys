@@ -173,12 +173,6 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from demo_user
-  </select>
-
   <select id="selectPage" parameterType="me.jinkun.rds.common.dto.Page" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -201,4 +195,12 @@
       </if>
     </where>
   </select>
+
+  <delete id="delete">
+    delete from demo_user
+    where id in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
 </mapper>

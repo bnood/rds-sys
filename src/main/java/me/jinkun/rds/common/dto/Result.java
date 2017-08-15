@@ -83,7 +83,7 @@ public class Result<T> implements Serializable {
         return CODE_EMPTY == this.code;
     }
 
-    public final static int CODE_OK = 0;
+    public final static int CODE_OK = 200;
     public final static int CODE_FAIL = 400;
     public final static int CODE_EMPTY = 300;
     public final static String CODE_OK_MSG = "ok";

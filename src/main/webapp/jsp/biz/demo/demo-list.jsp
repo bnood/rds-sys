@@ -21,7 +21,7 @@
     </div>
 </div>
 <!-- 弹窗  --> <!-- inline:true 不然多次打开tab会重复提交表单 -->
-<div id="ItemEdit" title="用户"  style="width:500px;height:500px;top: 50px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){Item.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){Item.input.close()}}]"></div>
+<div id="ItemEdit" title="用户"  style="width:500px;top: 50px;padding: 10px;display: none" data-options="iconCls: 'icon-save',closed: true,modal: true,inline:true,buttons:[{text:'保存',iconCls:'icon-save',handler:function(){Item.input.submitForm()}},{text:'取消',iconCls:'icon-cancel',handler:function(){Item.input.close()}}]"></div>
 <script src="<%=request.getContextPath()%>/jsp/biz/demo/demo.js"></script>
 <script>
     Item.list.init('<%=request.getContextPath()%>');

@@ -5,7 +5,7 @@
         <div>
             <label>登录名:</label>
             <div>
-                <input class="easyui-textbox com_input" type="text" name="loginName" data-options="required:true"/>
+                <input class="easyui-textbox com_input" type="text" name="loginName"  data-options="prompt:'Enter User Name.',required:true,validType:'length[3,10]'"/>
             </div>
         </div>
         <div>

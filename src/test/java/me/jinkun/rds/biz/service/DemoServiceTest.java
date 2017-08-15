@@ -5,6 +5,7 @@ import base.BaseServiceTest;
 import com.google.gson.Gson;
 import me.jinkun.rds.common.base.EUDataGridResult;
 import me.jinkun.rds.common.dto.Page;
+import me.jinkun.rds.common.dto.Result;
 import me.jinkun.rds.sys.dao.SysOrgMapper;
 import me.jinkun.rds.sys.service.SysOrgService;
 import org.junit.Test;
@@ -28,6 +29,13 @@ public class DemoServiceTest extends BaseServiceTest {
         page.setPage(2);
         page.setRows(2);
         EUDataGridResult result = this.demoService.page(page);
+        System.out.println(gson.toJson(result));
+    }
+
+    @Test
+    public void delete() throws Exception {
+        String ids = "1,2";
+        Result result = this.demoService.delete(ids);
         System.out.println(gson.toJson(result));
     }
 

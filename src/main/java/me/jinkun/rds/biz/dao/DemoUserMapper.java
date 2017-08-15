@@ -18,9 +18,9 @@ public interface DemoUserMapper {
 
     int updateByPrimaryKey(DemoUser record);
 
-    List<DemoUser> selectList();
-
     List<DemoUser> selectPage(Page page);
 
     int count(Page page);
+
+    int delete(List<Long> list);
 }

@@ -34,12 +34,12 @@ var Item = {
             ItemForm.form({
                 url: Item.URL.save(),
                 onSubmit: function () {
-                    // do some check
-                    // return false to prevent submit;
+                    return $(this).form('validate');
                 },
-                success: function (data) {
-                    var data = eval('(' + data + ')');
-                    if (data.code == 200) {
+                success: function (result) {
+                    var result = eval('(' + result + ')');
+                    $.messager.alert('提示', result.msg);
+                    if (result.code == 200) {
                         Item.input.close();
                         Item.list.reload();
                     }
@@ -69,28 +69,52 @@ var Item = {
                 url: Item.URL.list(),
                 method: 'get',
                 pagination: true,
-                pageSize: 30,
+                pageSize: 10,
                 toolbar: '#ItemToolbar',//Item.list.toolbar,
                 singleSelect: false,
                 collapsible: false,
                 columns: [[
                     {field: 'ck', checkbox: true},
-                    {field: 'id', title: '主键id', hidden: true},
+                    {field: 'id', title: '主键id', hidden: false},
                     {field: 'loginName', title: '登录名', width: '8.636%', hidden: false},
                     {field: 'name', title: '用户名', width: '8.636%', hidden: false},
                     {field: 'password', title: '密码', width: '8.636%', hidden: true},
-                    {field: 'sex', title: '性别', width: '8.636%', hidden: false,formatter:function(value,row,index){return value==0?'男':'女';}},
+                    {
+                        field: 'sex',
+                        title: '性别',
+                        width: '8.636%',
+                        hidden: false,
+                        formatter: function (value, row, index) {
+                            return value == 0 ? '男' : '女';
+                        }
+                    },
                     {field: 'age', title: '年龄', width: '8.636%', hidden: false},
                     {field: 'phone', title: '手机号', width: '8.636%', hidden: false},
-                    {field: 'userType', title: '用户类别', width: '8.636%', hidden: false,formatter:function(value,row,index){return value==0?'用户':'管理员';}},
-                    {field: 'status', title: '用户状态', width: '8.636%', hidden: false,formatter:function(value,row,index){return value==0?'启用':'停用';}},
+                    {
+                        field: 'userType',
+                        title: '用户类别',
+                        width: '8.636%',
+                        hidden: false,
+                        formatter: function (value, row, index) {
+                            return value == 0 ? '用户' : '管理员';
+                        }
+                    },
+                    {
+                        field: 'status',
+                        title: '用户状态',
+                        width: '8.636%',
+                        hidden: false,
+                        formatter: function (value, row, index) {
+                            return value == 0 ? '启用' : '停用';
+                        }
+                    },
                     {field: 'updateTime', title: '更新时间', width: '10%', hidden: false},
                     {field: 'createTime', title: '创建时间', width: '10%', hidden: false},
                 ]],
                 //设置选中事件，清除之前的行选择
-                onClickRow: function (index,row) {
+                onClickRow: function (index, row) {
                     ItemList.datagrid("unselectAll");
-                    ItemList.datagrid("selectRow",index);
+                    ItemList.datagrid("selectRow", index);
                 },
             });
         },
@@ -106,9 +130,8 @@ var Item = {
         //增
         add: function () {
             ItemEdit.dialog({
-                    href: Item.URL.inputUI(),
-                })
-                .dialog("open");
+                href: Item.URL.inputUI(),
+            }).dialog("open");
         },
         //改
         edit: function () {
@@ -124,25 +147,19 @@ var Item = {
             }
 
             ItemEdit.dialog({
-                    href: Item.URL.inputUI(),
-                    onLoad: function () {
-                        //方案一：使用Form的load去load数据
-                        //ItemForm.form("load", Item.URL.get(sels[0].id));
-                        //方案二：直接使用列表的row数据
-                        //ItemForm.form("load",sels[0]);
-                        //方案三：使用Ajax请求数据
-                        $.ajax({
-                            type: "GET",
-                            url: Item.URL.get(sels[0].id),
-                            success: function (data) {
-                                if (data.code == 200) {
-                                    ItemForm.form("load", data.data);
-                                }
+                href: Item.URL.inputUI(),
+                onLoad: function () {
+                    $.ajax({
+                        type: "GET",
+                        url: Item.URL.get(sels[0].id),
+                        success: function (data) {
+                            if (data.code == 200) {
+                                ItemForm.form("load", data.t);
                             }
-                        });
-                    }
-                })
-                .dialog("open");
+                        }
+                    });
+                }
+            }).dialog("open");
         },
         //删
         delete: function () {
@@ -160,7 +177,8 @@ var Item = {
                         $.ajax({
                             type: "DELETE",
                             url: Item.URL.delete(ids),
-                            success: function () {
+                            success: function (result) {
+                                $.messager.alert('提示', result.msg);
                                 Item.list.reload();
                                 Item.list.clearSelectionsAndChecked();
                             }
@@ -173,7 +191,7 @@ var Item = {
         reload: function () {
             ItemList.datagrid("reload");
         },
-        clearSelectionsAndChecked:function(){
+        clearSelectionsAndChecked: function () {
             ItemList.datagrid("clearChecked");
             ItemList.datagrid("clearSelections");
         },
@@ -188,7 +206,7 @@ var Item = {
 
             var queryParamsArr = [];
             for (var i = 0; i < searchName.length; i++) {
-                queryParamsArr.push('"'+searchName[i] + '":"' + searchValue[i] + '"')
+                queryParamsArr.push('"' + searchName[i] + '":"' + searchValue[i] + '"')
             }
             var queryParams = "{" + queryParamsArr.join(",") + "}";
 

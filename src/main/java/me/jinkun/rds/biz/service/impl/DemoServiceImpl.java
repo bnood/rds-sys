@@ -12,6 +12,7 @@ import me.jinkun.rds.sys.web.form.SysUserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,12 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public Result save(DemoUser item) {
-        int i = this.demoUserMapper.insertSelective(item);
+        int i;
+        if (CheckUtil.isEmpty(item.getId())) {
+            i = this.demoUserMapper.insertSelective(item);
+        } else {
+            i = this.demoUserMapper.updateByPrimaryKeySelective(item);
+        }
         if (1 != i) {
             return Result.fail();
         }
@@ -33,18 +39,37 @@ public class DemoServiceImpl implements DemoService {
     }
 
     @Override
-    public Result<DemoUser> list() {
-        List<DemoUser> demoUsers = this.demoUserMapper.selectList();
-        if (CheckUtil.isEmpty(demoUsers)) {
-            return Result.empty();
-        }
-        return Result.ok().setT(demoUsers);
-    }
-
-    @Override
     public EUDataGridResult page(Page page) {
         List<DemoUser> demoUsers = this.demoUserMapper.selectPage(page);
         int count = this.demoUserMapper.count(page);
         return new EUDataGridResult(count, demoUsers);
+    }
+
+    @Override
+    public Result<DemoUser> get(Long id) {
+        DemoUser demoUser = this.demoUserMapper.selectByPrimaryKey(id);
+        if (CheckUtil.isEmpty(demoUser)) {
+            return Result.empty();
+        }
+        return Result.ok().setT(demoUser);
+    }
+
+    @Override
+    public Result delete(String ids) {
+        List<Long> list = this.idsToList(ids);
+        int i = this.demoUserMapper.delete(list);
+        if (i < 1) {
+            return Result.fail();
+        }
+        return Result.ok();
+    }
+
+    private List<Long> idsToList(String ids) {
+        String[] id = ids.split(",");
+        List<Long> idList = new ArrayList<>();
+        for (int i = 0; i < id.length; i++) {
+            idList.add(Long.parseLong(id[i]));
+        }
+        return idList;
     }
 }
